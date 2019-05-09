@@ -1,12 +1,10 @@
-package FrogsConundrum.state;
-
-import FrogsConundrum.*;
-import FrogsConundrum.Window;
+package com.frost.frog.state;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
+
+import com.frost.frog.Window;
 
 public abstract class State extends JPanel{
 
@@ -16,7 +14,8 @@ public abstract class State extends JPanel{
     private class MouseListener extends MouseAdapter{
 
     }
-    public State(int width, int height, String fileName, FrogsConundrum.Window window){
+
+    public State(int width, int height, String fileName, Window window){
         setSize(width, height);
         setVisible(true);
         backGround = (fileName != null) ? Loader.load(fileName) : null;

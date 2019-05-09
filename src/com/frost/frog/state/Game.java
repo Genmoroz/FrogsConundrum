@@ -1,7 +1,8 @@
-package FrogsConundrum.state;
+package com.frost.frog.state;
 
-import FrogsConundrum.*;
-import FrogsConundrum.Window;
+import com.frost.frog.Fields;
+import com.frost.frog.Frog;
+import com.frost.frog.Window;;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;

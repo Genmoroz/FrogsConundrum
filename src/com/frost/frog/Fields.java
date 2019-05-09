@@ -1,3 +1,5 @@
+package com.frost.frog;
+
 import java.awt.*;
 
 public class Fields {

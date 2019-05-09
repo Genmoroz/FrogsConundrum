@@ -1,12 +1,14 @@
-import FrogsConundrum.state.Game;
-import FrogsConundrum.state.Loader;
+package com.frost.frog;
+
+import com.frost.frog.state.Game;
+import com.frost.frog.state.Loader;
 
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
-import static FrogsConundrum.State.Game.ready_Frog;
+import static com.frost.frog.state.Game.ready_Frog;
 
 public class Frog extends Field{
 
@@ -21,6 +23,7 @@ public class Frog extends Field{
     private float xField, yField;
     private Window window;
     private boolean leftMove = false;
+    private Point position;
 
     public Frog(int x, int y, int height, Fields fields, Window window, Game game) {
         super(x, y, height);
@@ -32,7 +35,7 @@ public class Frog extends Field{
         this.field = fields;
         this.fields = field.getFields();
         try {
-            position.setPosition(this.fields[this.x][this.y].position.x, this.fields[this.x][this.y].position.y);
+            position = new Point(this.fields[this.x][this.y].position.x, this.fields[this.x][this.y].position.y);
             xField = position.x;
             yField = position.y;
         }catch (Throwable e){
@@ -83,7 +86,7 @@ public class Frog extends Field{
         leftMove = tmpY > y || (y < tmpY && x < tmpX) || (y < tmpY && x > tmpX);
         temp = fields[x][y];
         fields[x][y] = null;
-        position.setPosition(field.position.x, field.position.y);
+        position.setLocation(field.position.x, field.position.y);
     }
 
     private void leftDown(int i, int j){

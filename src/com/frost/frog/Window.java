@@ -1,10 +1,12 @@
-import FrogsConundrum.state.*;
+package com.frost.frog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+
+import com.frost.frog.state.*;
+import com.frost.frog.state.Menu;
 
 public class Window extends JFrame implements ActionListener{
 

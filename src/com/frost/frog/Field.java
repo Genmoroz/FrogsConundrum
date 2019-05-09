@@ -1,11 +1,12 @@
-import MyPaint.Shape.Vector;
+package com.frost.frog;
+
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 
 public class Field {
 
-    protected Vector position;
+    protected Point position;
     protected int height;
     private boolean top = false;
     public int cost = 9999;
@@ -13,7 +14,7 @@ public class Field {
     public int indexX, indexY;
 
     public Field(int x, int y, int height){
-        position = new Vector(x, y);
+        position = new Point(x, y);
         this.height = height;
     }
     public void draw(Graphics2D g2){
