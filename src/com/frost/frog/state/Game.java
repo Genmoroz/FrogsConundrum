@@ -2,12 +2,14 @@ package com.frost.frog.state;
 
 import com.frost.frog.Fields;
 import com.frost.frog.Frog;
-import com.frost.frog.Window;;
+import com.frost.frog.Window;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+
+;
 
 public class Game extends State {
 
@@ -105,53 +107,33 @@ public class Game extends State {
         g2.drawString("Score: " + score, 190, 450);
 
         if (restart){
-            g2.setColor(new Color(0, 0, 0, 50));
-            g2.fillRect(0, 0, getWidth(), getHeight());
-            g2.setColor(new Color(161, 29, 0, 230));
-            g2.fillRect(150, 150, 200, 100);
-            g2.setColor(new Color(71, 15, 0, 180));
-            g2.drawLine(250, 150, 250, 249);
-            g2.drawRect(149, 149, 200, 101);
-            g2.setColor(Color.BLACK);
-            g2.setFont(new Font(Font.SERIF, Font.BOLD, 40));
+            paintDarkPanel(g2);
             g2.drawString("Yes", 170, 210);
             g2.drawString("No", 270, 210);
         }
         if (LOSE){
-            g2.setColor(new Color(0, 0, 0, 50));
-            g2.fillRect(0, 0, getWidth(), getHeight());
-            g2.setColor(new Color(161, 29, 0, 230));
-            g2.fillRect(150, 150, 200, 100);
-            g2.setColor(new Color(71, 15, 0, 180));
-            g2.drawRect(149, 149, 200, 101);
-            g2.setColor(Color.BLACK);
-            g2.setFont(new Font(Font.SERIF, Font.BOLD, 40));
+            paintDarkPanel(g2);
             g2.drawString("You lose", 170, 210);
         }
         if (WIN){
-            g2.setColor(new Color(0, 0, 0, 50));
-            g2.fillRect(0, 0, getWidth(), getHeight());
-            g2.setColor(new Color(161, 29, 0, 230));
-            g2.fillRect(150, 150, 200, 100);
-            g2.setColor(new Color(71, 15, 0, 180));
-            g2.drawRect(149, 149, 200, 101);
-            g2.setColor(Color.BLACK);
-            g2.setFont(new Font(Font.SERIF, Font.BOLD, 40));
+            paintDarkPanel(g2);
             g2.drawString("You win", 170, 210);
         }
         g.drawImage(buffer, 0, 0, null);
     }
-    public void setLock(){
-        lock = !lock;
+
+    private void paintDarkPanel(Graphics2D g2) {
+        g2.setColor(new Color(0, 0, 0, 50));
+        g2.fillRect(0, 0, getWidth(), getHeight());
+        g2.setColor(new Color(161, 29, 0, 230));
+        g2.fillRect(150, 150, 200, 100);
+        g2.setColor(new Color(71, 15, 0, 180));
+        g2.drawRect(149, 149, 200, 101);
+        g2.setColor(Color.BLACK);
+        g2.setFont(new Font(Font.SERIF, Font.BOLD, 40));
     }
 
-    @Override
-    public String toString() {
-        return "Game{" +
-                "fields=" + fields +
-                ", lock=" + lock +
-                ", restart=" + restart +
-                ", score=" + score +
-                '}';
+    private void setLock(){
+        lock = !lock;
     }
 }

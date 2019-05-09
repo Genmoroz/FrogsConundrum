@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 import static com.frost.frog.state.Game.ready_Frog;
 
@@ -65,7 +66,11 @@ public class Frog extends Field{
     }
     public void draw(Graphics2D g2){
         g2.setColor(new Color(255, 250, 0, 200));
-        g2.fill(new Area(new Ellipse2D.Double(position.x, position.y, height, height)));
+        if (Objects.isNull(position)) {
+            g2.fill(new Area(new Ellipse2D.Double(0, 0, height, height)));
+        } else {
+            g2.fill(new Area(new Ellipse2D.Double(position.x, position.y, height, height)));
+        }
 
         g2.drawImage((leftMove) ? imageLeft : imageRight, (int)position.x - 2, (int)position.y - 4, height + 2, height + 2, null);
         if (ready_Frog)update();
