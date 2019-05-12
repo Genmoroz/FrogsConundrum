@@ -2,7 +2,12 @@ package com.frost.frog.state;
 
 import com.frost.frog.Window;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -13,13 +18,13 @@ public class Menu extends State {
     public Menu(int width, int height, String fileName, Window window) {
         super(width, height, fileName, window);
         addMouseListener(new MouseListener());
-
     }
-    private class MouseListener extends MouseAdapter{
 
-        public void mousePressed(MouseEvent e){
+    private class MouseListener extends MouseAdapter {
+
+        public void mousePressed(MouseEvent e) {
             if (e.getX() >= 130 && e.getX() <= (130 + 220)
-                    && e.getY() >= 170 && e.getY() <= (170 + 40)){
+                    && e.getY() >= 170 && e.getY() <= (170 + 40)) {
                 window.setState(new Game(window.getWidth(), window.getHeight(), "water.jpg", window));
             }
         }

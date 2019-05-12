@@ -4,12 +4,14 @@ import com.frost.frog.Fields;
 import com.frost.frog.Frog;
 import com.frost.frog.Window;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-
-;
 
 public class Game extends State {
 
@@ -36,11 +38,13 @@ public class Game extends State {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        frog = new Frog(0, 0, 35, fields, window, this);
+        frog = new Frog(0, 0, 35, fields, this);
     }
-    public void addFields(){
+
+    public void addFields() {
         fields = new Fields(58, 20, 35);
     }
+
     private class MouseListener extends MouseAdapter {
 
         @Override
@@ -77,8 +81,7 @@ public class Game extends State {
                         e.getY() >= 430 && e.getY() <= (430 + 35)) {
                     setLock();
                 }
-            }
-            else{
+            } else {
                 window.setState(new Menu(getWidth(), getHeight(), "water.jpg", window));
                 LOSE = false;
                 WIN = false;
@@ -90,7 +93,7 @@ public class Game extends State {
     public void paint(Graphics g) {
 
         BufferedImage buffer = (BufferedImage) createImage(getWidth(), getHeight());
-        Graphics2D g2 = (Graphics2D)buffer.getGraphics();
+        Graphics2D g2 = (Graphics2D) buffer.getGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         g2.drawImage(backGround, 0, 0, getWidth(), getHeight(), null);
@@ -106,18 +109,18 @@ public class Game extends State {
         g2.setFont(new Font(Font.SERIF, Font.BOLD, 30));
         g2.drawString("Score: " + score, 190, 450);
 
-        if (restart){
+        if (restart) {
             paintDarkPanel(g2);
             g2.drawString("Yes", 170, 210);
             g2.drawString("No", 270, 210);
         }
-        if (LOSE){
+        if (LOSE) {
             paintDarkPanel(g2);
-            g2.drawString("You lose", 170, 210);
+            g2.drawString("You lose", 160, 210);
         }
-        if (WIN){
+        if (WIN) {
             paintDarkPanel(g2);
-            g2.drawString("You win", 170, 210);
+            g2.drawString("You win", 160, 210);
         }
         g.drawImage(buffer, 0, 0, null);
     }
@@ -133,7 +136,7 @@ public class Game extends State {
         g2.setFont(new Font(Font.SERIF, Font.BOLD, 40));
     }
 
-    private void setLock(){
+    private void setLock() {
         lock = !lock;
     }
 }

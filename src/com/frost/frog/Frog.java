@@ -1,17 +1,18 @@
 package com.frost.frog;
 
 import com.frost.frog.state.Game;
+import static com.frost.frog.state.Game.ready_Frog;
 import com.frost.frog.state.Loader;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-import static com.frost.frog.state.Game.ready_Frog;
-
-public class Frog extends Field{
+public class Frog extends Field {
 
     private BufferedImage imageLeft;
     private BufferedImage imageRight;
@@ -21,14 +22,11 @@ public class Frog extends Field{
     private int minMoves = 9999;
     private Field minField = null;
     private int x, y;
-    private float xField, yField;
-    private Window window;
     private boolean leftMove = false;
     private Point position;
 
-    public Frog(int x, int y, int height, Fields fields, Window window, Game game) {
+    public Frog(int x, int y, int height, Fields fields, Game game) {
         super(x, y, height);
-        this.window = window;
         this.x = 5;
         this.y = 5;
         imageLeft = Loader.load("frog_left.png");
@@ -37,16 +35,15 @@ public class Frog extends Field{
         this.fields = field.getFields();
         try {
             position = new Point(this.fields[this.x][this.y].position.x, this.fields[this.x][this.y].position.y);
-            xField = position.x;
-            yField = position.y;
-        }catch (Throwable e){
+        } catch (Throwable e) {
             e.printStackTrace();
             game.addFields();
         }
         temp = this.fields[this.y][this.x];
-        this.fields[this.y][this.x]= null;
+        this.fields[this.y][this.x] = null;
     }
-    public void update(){
+
+    private void update() {
         field.resetCoins();
         minMoves = 9999;
         minField = null;
@@ -59,12 +56,13 @@ public class Frog extends Field{
         try {
             Thread.sleep(50);
             swap(minField.getField());
-        }catch (Throwable e){
+        } catch (Throwable e) {
             Game.WIN = true;
         }
         ready_Frog = !ready_Frog;
     }
-    public void draw(Graphics2D g2){
+
+    public void draw(Graphics2D g2) {
         g2.setColor(new Color(255, 250, 0, 200));
         if (Objects.isNull(position)) {
             g2.fill(new Area(new Ellipse2D.Double(0, 0, height, height)));
@@ -72,13 +70,14 @@ public class Frog extends Field{
             g2.fill(new Area(new Ellipse2D.Double(position.x, position.y, height, height)));
         }
 
-        g2.drawImage((leftMove) ? imageLeft : imageRight, (int)position.x - 2, (int)position.y - 4, height + 2, height + 2, null);
-        if (ready_Frog)update();
+        g2.drawImage((leftMove) ? imageLeft : imageRight, (int) position.x - 2, (int) position.y - 4, height + 2, height + 2, null);
 
+        if (ready_Frog) {
+            update();
+        }
     }
 
-    private void swap(Field field){
-
+    private void swap(Field field) {
         if (field.getTop()) {
             Game.LOSE = true;
         }
@@ -94,30 +93,31 @@ public class Frog extends Field{
         position.setLocation(field.position.x, field.position.y);
     }
 
-    private void leftDown(int i, int j){
+    private void leftDown(int i, int j) {
 
         Field temp = null;
         int cost = 1;
 
-        if (fields[i][j] != null){
+        if (fields[i][j] != null) {
 
             cost = fields[i][j].cost;
             temp = fields[i][j];
 
-            if (fields[i][j].getTop()){
-                if (fields[i][j].cost <= minMoves){
+            if (fields[i][j].getTop()) {
+                if (fields[i][j].cost <= minMoves) {
                     minMoves = fields[i][j].cost;
                     minField = fields[i][j];
-                }return;
+                }
+                return;
             }
             if (++i % 2 == 0)
                 j--;
             if (i < 0 || i > 10 || j < 0 || j > 10 || fields[i][j] == null) return;
             if (fields[i][j].cost <= cost) return;
 
-        }else {
+        } else {
 
-            if (i == 0 || i == 10 || j == 0 || j == 10){
+            if (i == 0 || i == 10 || j == 0 || j == 10) {
                 Game.WIN = true;
             }
 
@@ -141,24 +141,26 @@ public class Frog extends Field{
         leftUp(i, j);
         rightUp(i, j);
     }
-    private void rightDown(int i, int j){
+
+    private void rightDown(int i, int j) {
 
         Field temp = null;
         int cost = 1;
 
-        if (fields[i][j] != null){
+        if (fields[i][j] != null) {
 
             cost = fields[i][j].cost;
             temp = fields[i][j];
 
-            if (fields[i][j].getTop()){
-                if (fields[i][j].cost <= minMoves){
+            if (fields[i][j].getTop()) {
+                if (fields[i][j].cost <= minMoves) {
                     minMoves = fields[i][j].cost;
                     minField = fields[i][j];
-                }return;
+                }
+                return;
             }
 
-            if (i == 0 || i == 10 || j == 0 || j == 10){
+            if (i == 0 || i == 10 || j == 0 || j == 10) {
                 Game.WIN = true;
             }
 
@@ -170,8 +172,7 @@ public class Frog extends Field{
             if (fields[i][j].cost <= cost) return;
 
 
-
-        }else {
+        } else {
             if (++i % 2 != 0)
                 j++;
             if (i < 0 || i > 10 || j < 0 || j > 10 || fields[i][j] == null) return;
@@ -188,20 +189,22 @@ public class Frog extends Field{
         leftUp(i, j);
         rightUp(i, j);
     }
-    private void right(int i, int j){
+
+    private void right(int i, int j) {
         Field temp = null;
         int cost = 1;
 
-        if (fields[i][j] != null){
+        if (fields[i][j] != null) {
 
             cost = fields[i][j].cost;
             temp = fields[i][j];
 
-            if (fields[i][j].getTop()){
-                if (fields[i][j].cost <= minMoves){
+            if (fields[i][j].getTop()) {
+                if (fields[i][j].cost <= minMoves) {
                     minMoves = fields[i][j].cost;
                     minField = fields[i][j];
-                }return;
+                }
+                return;
             }
             j++;
 
@@ -210,11 +213,10 @@ public class Frog extends Field{
             if (fields[i][j].cost <= cost) return;
 
 
+        } else {
 
-        }else {
 
-
-            if (i == 0 || i == 10 || j == 0 || j == 10){
+            if (i == 0 || i == 10 || j == 0 || j == 10) {
                 Game.WIN = true;
             }
 
@@ -234,30 +236,32 @@ public class Frog extends Field{
         leftUp(i, j);
         rightUp(i, j);
     }
-    private void left(int i, int j){
+
+    private void left(int i, int j) {
         Field temp = null;
         int cost = 1;
 
-        if (fields[i][j] != null){
+        if (fields[i][j] != null) {
 
             cost = fields[i][j].cost;
             temp = fields[i][j];
 
-            if (fields[i][j].getTop()){
-                if (fields[i][j].cost <= minMoves){
+            if (fields[i][j].getTop()) {
+                if (fields[i][j].cost <= minMoves) {
                     minMoves = fields[i][j].cost;
                     minField = fields[i][j];
-                }return;
+                }
+                return;
             }
             j--;
 
             if (i < 0 || i > 10 || j < 0 || j > 10 || fields[i][j] == null) return;
             if (fields[i][j].cost <= cost) return;
 
-        }else {
+        } else {
 
 
-            if (i == 0 || i == 10 || j == 0 || j == 10){
+            if (i == 0 || i == 10 || j == 0 || j == 10) {
                 Game.WIN = true;
             }
 
@@ -276,20 +280,22 @@ public class Frog extends Field{
         leftUp(i, j);
         rightUp(i, j);
     }
-    private void rightUp(int i, int j){
+
+    private void rightUp(int i, int j) {
         Field temp = null;
         int cost = 1;
 
-        if (fields[i][j] != null){
+        if (fields[i][j] != null) {
 
             cost = fields[i][j].cost;
             temp = fields[i][j];
 
-            if (fields[i][j].getTop()){
-                if (fields[i][j].cost <= minMoves){
+            if (fields[i][j].getTop()) {
+                if (fields[i][j].cost <= minMoves) {
                     minMoves = fields[i][j].cost;
                     minField = fields[i][j];
-                }return;
+                }
+                return;
             }
 
             if (--i % 2 != 0)
@@ -300,10 +306,9 @@ public class Frog extends Field{
             if (fields[i][j].cost <= cost) return;
 
 
+        } else {
 
-        }else {
-
-            if (i == 0 || i == 10 || j == 0 || j == 10){
+            if (i == 0 || i == 10 || j == 0 || j == 10) {
                 Game.WIN = true;
             }
 
@@ -323,18 +328,19 @@ public class Frog extends Field{
         leftUp(i, j);
         rightUp(i, j);
     }
-    private void leftUp(int i, int j){
+
+    private void leftUp(int i, int j) {
 
         Field temp = null;
         int cost = 1;
 
-        if (fields[i][j] != null){
+        if (fields[i][j] != null) {
 
             cost = fields[i][j].cost;
             temp = fields[i][j];
 
-            if (fields[i][j].getTop()){
-                if (fields[i][j].cost <= minMoves){
+            if (fields[i][j].getTop()) {
+                if (fields[i][j].cost <= minMoves) {
                     minMoves = fields[i][j].cost;
                     minField = fields[i][j];
                 }
@@ -348,9 +354,9 @@ public class Frog extends Field{
 
             if (fields[i][j].cost <= cost) return;
 
-        }else {
+        } else {
 
-            if (i == 0 || i == 10 || j == 0 || j == 10){
+            if (i == 0 || i == 10 || j == 0 || j == 10) {
                 Game.WIN = true;
             }
 

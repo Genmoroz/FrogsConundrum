@@ -1,21 +1,21 @@
 package com.frost.frog;
 
-import javax.swing.*;
-import java.awt.*;
+import com.frost.frog.state.Menu;
+import com.frost.frog.state.State;
+
+import javax.swing.JFrame;
+import javax.swing.Timer;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.frost.frog.state.*;
-import com.frost.frog.state.Menu;
+public class Window extends JFrame implements ActionListener {
 
-public class Window extends JFrame implements ActionListener{
+    private static Window window = null;
 
-private static Window window = null;
+    private State state;
 
-    private Timer running;
-    private State state = null;
-
-    private Window(String name){
+    private Window(String name) {
         super(name);
         setSize(500, 500);
         setResizable(false);
@@ -26,29 +26,32 @@ private static Window window = null;
         setFocusable(true);
         state = new Menu(getWidth(), getHeight(), "water.jpg", this);
         getContentPane().add(state);
-        running = new Timer(1000/60, e -> this.repaint());
+        Timer running = new Timer(1000 / 60, e -> this.repaint());
         running.start();
+    }
 
+    static Window instance() {
+        return (window != null) ? window : (window = new Window("com.frost.frog.Frog"));
     }
-    public static Window instance(String name){
-        return (window != null) ? window : (window = new Window(name));
-    }
-    public void dispose(){
+
+    public void dispose() {
         window = null;
     }
-    public void paint(Graphics g){
-        if (state != null){
+
+    public void paint(Graphics g) {
+        if (state != null) {
             state.repaint();
         }
     }
-    public void setState(State st){
+
+    public void setState(State st) {
         getContentPane().remove(state);
         this.state = st;
         getContentPane().add(st);
 
     }
-    @Override
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         repaint();
     }

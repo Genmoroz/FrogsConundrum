@@ -1,21 +1,21 @@
 package com.frost.frog.state;
 
-import javax.swing.*;
+import com.frost.frog.Window;
+
+import javax.swing.JPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 
-import com.frost.frog.Window;
+public abstract class State extends JPanel {
 
-public abstract class State extends JPanel{
+    BufferedImage backGround;
+    Window window;
 
-    protected BufferedImage backGround;
-    protected Window window;
-
-    private class MouseListener extends MouseAdapter{
+    private class MouseListener extends MouseAdapter {
 
     }
 
-    public State(int width, int height, String fileName, Window window){
+    public State(int width, int height, String fileName, Window window) {
         setSize(width, height);
         setVisible(true);
         backGround = (fileName != null) ? Loader.load(fileName) : null;
